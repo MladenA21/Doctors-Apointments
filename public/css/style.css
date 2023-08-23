@@ -1,0 +1,150 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #54B2D3;
+    gap: 10px;
+    padding: 25px 40px 55px 40px;
+    border-radius: 10px;
+    width: 470px;
+    position: relative;
+}
+
+button {
+    position: absolute;
+    bottom: 0;
+    background-color: white;
+    border: none;
+    padding: 15px 80px;
+    border-top-left-radius: 100%;
+    border-top-right-radius: 100%;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: .4s ease-in-out;
+}
+
+button:hover {
+    transform: translateY(5px);
+    opacity: 0.8;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+}
+
+input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid white;
+    padding: 8px 2px;
+    color: white;
+}
+textarea {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid white;
+    padding: 8px 2px;
+    color: white;
+}
+
+select {
+    width: 100%;
+    background-color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 5px;
+    border-bottom: 2px solid white;
+    color: black;
+}
+
+h3 {
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}
+label {
+    color: white;
+    font-size: 18px;
+}
+
+.time-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-bottom: 13px;
+    gap: 20px;
+}
+
+.time-container > div {
+    width: 100%;
+    padding-bottom: 13px;
+}
+
+.ui-datepicker-inline, #datepicker {
+    width: calc(100% - 0.4rem);
+}
+
+.ui-datepicker-header, .ui-state-highlight {
+    background-color: #17B4D7 !important;
+    border: none !important;
+    color: white !important;
+}
+
+.ui-state-active {
+    background-color: #54B2D3 !important;
+    border: none !important;
+}
+
+.error-message {
+    color: red;
+    width: 100%;
+    height: 12px;
+    font-weight: 100;
+    font-size: 15px;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    background-color: #54B2D3;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+#table {
+    min-width: 850px;
+}
+
+table th {
+    text-align: left;
+}
+
+span {
+    cursor: pointer;
+}

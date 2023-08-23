@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./css/jquery-ui.min.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+    <title>Doctors</title>
+</head>
+<body>
+    <nav id="nav">
+        <a href="./index.html">Book</a>
+        <a href="./apointments.html">Apointments</a>
+    </nav>
+<div class="container">
+    <h3>Book your appointment</h3>
+    <div class="input-group">
+        <label for="name">Name</label>
+        <input name="name" id="name"  type="text"> 
+        <span class="error-message" id="name-error"></span>
+    </div>
+    <div class="input-group">
+        <label for="number">Pumber Number</label>
+        <input name="number" id="number" type="number">
+        <span class="error-message" id="number-error"></span>
+    </div>
+    <div class="input-group">
+        <label for="email">Email</label>
+        <input name="email"  id="email" type="email">
+        <span class="error-message" id="email-error"></span>
+    </div>
+
+    <div class="input-group">
+        <label for="">Special Requirements</label>
+        <textarea name="special_requirements" id="special_requirements" cols="30" rows="3"></textarea>
+        <span class="error-message" id="special_requirements-error"></span>
+    </div>
+
+    <div class="input-group">
+        <label for="">Medical Condition</label>
+        <textarea name="medical_condition" id="medical_condition" cols="30" rows="3"></textarea>
+        <span class="error-message" id="medical_condition-error"></span>
+    </div>
+
+    <div class="input-group">
+        <select name="services" id="services">
+            <option value="" selected>Choose a service</option>
+        </select>
+        <span class="error-message" id="service_id-error"></span>
+    </div>
+
+    <div  class="input-group">
+        <select name="status" id="status">
+            <option value="" selected>Choose a status</option>
+            <option value="basic">Basic</option>
+            <option value="urgent">Urgent</option>
+        </select>   
+        <span class="error-message" id="status-error"></span>
+    </div>
+
+    <div  class="input-group">
+        <div id="datepicker"></div>  
+        <span class="error-message" id="day-error"></span>
+    </div>
+
+    <div class="time-container">
+        <div>
+            <select name="start_time" id="start_time">
+                <option value="" selected>Choose a day first</option>
+            </select>
+            <span class="error-message" id="start_time-error"></span>    
+        </div>
+        <div>
+            <select name="end_time" id="end_time">
+                <option value="" selected>-</option>
+            </select>
+            <span class="error-message" id="end_time-error"></span>
+        </div>
+    </div>
+
+    <button id="submit">Submit</button>
+</div>
+
+
+
+<script src="./js/jquery.js"></script>
+<script src="./js/jquery-ui.min.js"></script>
+<script src="./js/app.js"></script>
+</body>
+</html>

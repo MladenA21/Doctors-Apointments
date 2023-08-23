@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./css/jquery-ui.min.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+    <title>Doctors</title>
+</head>
+<body>
+    <nav id="nav">
+        <a href="./index.html">Book</a>
+        <a href="./apointments.html">Apointments</a>
+    </nav>
+    <table id="table">
+        <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>starts at</th>
+          <th>ends at</th>
+          <th>day</th>
+          <th>actions</th>
+        </tr>
+      </table>
+      <div class="container">
+        <h3 id="title">Select apointment to Reschedule</h3>
+        <div  class="input-group">
+            <div id="datepicker"></div>  
+            <span class="error-message" id="day-error"></span>
+        </div>
+    
+        <div class="time-container">
+            <div>
+                <select name="start_time" id="start_time">
+                    <option value="" selected>Choose a day first</option>
+                </select>
+                <span class="error-message" id="start_time-error"></span>    
+            </div>
+            <div>
+                <select name="end_time" id="end_time">
+                    <option value="" selected>-</option>
+                </select>
+                <span class="error-message" id="end_time-error"></span>
+            </div>
+        </div>
+    
+        <button id="submit">Reschedule</button>
+    </div>
+<script src="./js/jquery.js"></script>
+<script src="./js/jquery-ui.min.js"></script>
+<script>
+    let freeHours = [];
+    let takenIntervals = [];
+    let selectedDate = "";
+    let selectedAp = "";
+    $("#datepicker").hide();
+    $("#start_time").hide();
+    $("#end_time").hide();
+    $("#submit").hide();
+
+    $ ('#datepicker').datepicker ({
+        minDate: 0,
+        dateFormat: "dd/mm/yy",
+        beforeShowDay: function (date) {
+          var day = date.getDay ();
+          return [day == 0 || day == 6 ? false : true, ''];
+        },
+        onSelect: function () {
+          let date = $ (this).datepicker ('getDate');
+          var formData = new FormData();
+          selectedDate =  $.datepicker.formatDate('yy-mm-dd', date)
+          formData.append('day',  selectedDate);
+          fetch("http://localhost/pabau/api/isFree.php?without=" + selectedAp, {
+              method: "POST",
+              body: formData
+          }).then(res => res.json()).then(data => {
+              $("#start_time").html('<option value="" selected >Select starting hour</option>');
+              $("#start_time").append(data.data.freeHours.map(item => `<option value='${item}'>${item}</option>`));
+      
+              $("#end_time").html('<option value="" selected >-</option>');
+              freeHours = data.data.freeHours;
+              takenIntervals = data.data.takenIntervals;
+          })
+      },
+      });
+
+      $("#start_time").on('change', (e) => {
+        let validPeriod = [];
+        let allIntervals = [];
+    
+        for(let i = parseInt(e.target.value) + 1; i <= 17; i++) {
+            allIntervals.push({
+                start_time: parseInt(e.target.value),
+                end_time: i
+            })
+        }
+    
+        allIntervals.forEach(item => {
+            let isTaken = false;
+            takenIntervals.forEach(takenItem => {
+                if(item.start_time < takenItem.end_time && item.end_time > takenItem.start_time) {
+                    isTaken = true
+                }
+            })
+            
+            !isTaken ? validPeriod.push(item.end_time) : "";
+        });
+    
+        $("#end_time").html('<option value="" selected >Select ending hour</option>');
+        $("#end_time").append(validPeriod.map(item => `<option value="${item}">${item}</option>`));
+    });
+    
+    $("#submit").on('click', () => {
+        var formData = new FormData();
+        formData.append("id", selectedAp)
+        formData.append("day", selectedDate)
+        formData.append("start_time", $("#start_time").val())
+        formData.append("end_time", $("#end_time").val())
+    
+        fetch("http://localhost/pabau/api/apointments-update.php", {
+            method: "POST",
+            body: formData
+        }).then(res => {
+            return  res.json()
+        }).then(data => {
+            let all = [
+            "start_time",
+            "end_time",
+            "day"
+        ];
+    
+            all.forEach(item => {
+                $((`#${item}-error`)).html("");
+            })
+    
+            console.log($("#services").val())
+            if(data.message == "Validations have failed") {
+                for (const key in data.data) {
+                    $((`#${key}-error`)).html(data.data[key]);
+                }
+    
+                return;
+            }
+    
+            location.reload();
+        })
+    
+    })
+
+    function reschedule(id,day,start_time,end_time) {
+        $("#title").html("RESCHEDULING id: " + id);
+        selectedAp = id;
+        $("#submit").show();
+        $("#datepicker").show();
+        $("#start_time").show();
+        $("#end_time").show();
+    }
+
+    fetch("http://localhost/pabau/api/apointments.php")
+    .then(res => res.json())
+    .then(data => {
+        $("#table").append(data.data.map(item => `
+        <tr>
+            <td>${item.id}</td>
+            <td>${item.name}</td>
+            <td>${item.start_time}H</td>
+            <td>${item.end_time}H</td>
+            <td>${item.day}</td>
+            <td><span onClick="reschedule(${item.id}, ${item.day}, ${item.start_time}, ${item.end_time})">select</span> <a href="http://localhost/pabau/api/apointments.php?cancel=${item.id}">cancel</a></td>
+          </tr>
+        `));
+    })
+</script>
+</body>
+</html>
