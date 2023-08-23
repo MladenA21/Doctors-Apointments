@@ -5,6 +5,7 @@
     align-items: center;
     background-color: #54B2D3;
     gap: 10px;
+    margin: 80px 0;
     padding: 25px 40px 55px 40px;
     border-radius: 10px;
     width: 470px;
@@ -122,6 +123,7 @@ label {
 }
 
 nav {
+    z-index: 100;
     position: fixed;
     top: 0;
     width: 100%;
