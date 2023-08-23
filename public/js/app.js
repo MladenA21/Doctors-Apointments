@@ -2,7 +2,7 @@ let freeHours = [];
 let takenIntervals = [];
 let selectedDate = "";
 
-fetch("http://localhost/pabau/api/services.php")
+fetch("../../api/services.php")
 .then(res => res.json())
 .then(data => {
     $("#services").append(data.data.map(item => `<option value="${item.id}">${item.name}</option>`));
@@ -23,7 +23,7 @@ $ ('#datepicker').datepicker ({
     selectedDate =  $.datepicker.formatDate('yy-mm-dd', date)
 
     formData.append('day',  selectedDate);
-    fetch("http://localhost/pabau/api/isFree.php", {
+    fetch("../../api/isFree.php", {
         method: "POST",
         body: formData
     }).then(res => res.json()).then(data => {
@@ -79,7 +79,7 @@ $("#submit").on('click', () => {
     formData.append("start_time", $("#start_time").val())
     formData.append("end_time", $("#end_time").val())
 
-    fetch("http://localhost/pabau/api/apointments.php", {
+    fetch("../../api/apointments.php", {
         method: "POST",
         body: formData
     }).then(res => {

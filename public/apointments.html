@@ -70,7 +70,7 @@
           var formData = new FormData();
           selectedDate =  $.datepicker.formatDate('yy-mm-dd', date)
           formData.append('day',  selectedDate);
-          fetch("http://localhost/pabau/api/isFree.php?without=" + selectedAp, {
+          fetch("../api/isFree.php?without=" + selectedAp, {
               method: "POST",
               body: formData
           }).then(res => res.json()).then(data => {
@@ -117,7 +117,7 @@
         formData.append("start_time", $("#start_time").val())
         formData.append("end_time", $("#end_time").val())
     
-        fetch("http://localhost/pabau/api/apointments-update.php", {
+        fetch("../api/apointments-update.php", {
             method: "POST",
             body: formData
         }).then(res => {
@@ -156,7 +156,7 @@
         $("#end_time").show();
     }
 
-    fetch("http://localhost/pabau/api/apointments.php")
+    fetch("../api/apointments.php")
     .then(res => res.json())
     .then(data => {
         $("#table").append(data.data.map(item => `
@@ -166,7 +166,7 @@
             <td>${item.start_time}H</td>
             <td>${item.end_time}H</td>
             <td>${item.day}</td>
-            <td><span onClick="reschedule(${item.id}, ${item.day}, ${item.start_time}, ${item.end_time})">select</span> <a href="http://localhost/pabau/api/apointments.php?cancel=${item.id}">cancel</a></td>
+            <td><span onClick="reschedule(${item.id}, ${item.day}, ${item.start_time}, ${item.end_time})">select</span> <a href="../api/apointments.php?cancel=${item.id}">cancel</a></td>
           </tr>
         `));
     })
